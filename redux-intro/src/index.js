@@ -36,18 +36,20 @@ const secondReducer = (state = [], action) => {  // setting state to an empty ar
     if (action.type === 'BUTTON_TWO') {
         console.log('secondReducer', action);
         return [...state, 'oreo']; // add oreo to the state
-    }  // else action.type === 'REMOVE_OREO') {
-    // return 
-
+    }  else if (action.type === 'EAT_ALL') {
+      state = [];
+    }
     return state;
 }
 
-const thirdReducer = (state = {}, action) => {  // setting state to an empty array to start
+const thirdReducer = (state = [], action) => {  // setting state to an empty array to start
     if (action.type === 'CHANGE_BUTTON') {
         console.log('thirdReducer', action);
-        return action.inputButton
+        return [...state, action.payload];
     }
-    return state;
+    // as long as we click on this button it works, but if we click on another button it 
+    // fires off all buttons reducers and clears the feilds
+    return [];
 }
 
 
