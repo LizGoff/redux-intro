@@ -5,7 +5,8 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 // the store communicates and passes action information
 // middleware calls out before the reducer
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+//compose
+import { createStore, combineReducers, applyMiddleware, } from 'redux';
 // Provider makes the connection between redux and app
 import { Provider } from 'react-redux';
 // redux logs out useful info about redux so we don't have to
@@ -16,19 +17,40 @@ import logger from 'redux-logger';
 
 
 // the action is what we dispatched from app.js or whatever component you'd like
-const firstReducer = (state, action) => {
+const firstReducer = (state = 0, action) => {
     if (action.type === 'BUTTON_ONE') {
         console.log('firstReducer', action);
+        return state + 1;
+    } else {
+        (action.type === 'MINUS')
+        return state - 1;
     }
-    return {};
+    // use this to test code first
+    // return {}; //return next state
+    return state;
 }
 
-const secondReducer = (state, action) => {
+// box of oreo reducer
+
+const secondReducer = (state = [], action) => {  // setting state to an empty array to start
     if (action.type === 'BUTTON_TWO') {
         console.log('secondReducer', action);
-    }
-    return {};
+        return [...state, 'oreo']; // add oreo to the state
+    }  // else action.type === 'REMOVE_OREO') {
+    // return 
+
+    return state;
 }
+
+const thirdReducer = (state = {}, action) => {  // setting state to an empty array to start
+    if (action.type === 'CHANGE_BUTTON') {
+        console.log('thirdReducer', action);
+        return action.inputButton
+    }
+    return state;
+}
+
+
 
 
 
@@ -45,10 +67,12 @@ const storeInstance = createStore(
 
         // this is a shortcut to get the same thing
         firstReducer,
-        secondReducer
-    }), 
+        secondReducer,
+        thirdReducer
+
+    }),
     // this attaches the logs to the console log so that you can see its state and info.
-        applyMiddleware(logger),
+    applyMiddleware(logger),
 );
 
 // Use this to first in the above to make sure it is connected
